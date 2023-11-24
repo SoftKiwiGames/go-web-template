@@ -16,5 +16,5 @@
 /bin/
 /tmp/
 node_modules/
-ui/*_templ.go
+*_templ.go
 /dist/

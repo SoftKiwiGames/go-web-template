@@ -1,6 +1,7 @@
 package web
 
 import (
+	"SoftKiwiGames/go-web-template/accounts"
 	"context"
 	"log"
 	"net/http"
@@ -19,6 +20,11 @@ type Server struct {
 func (s *Server) Run(args []string) int {
 	r := chi.NewRouter()
 
+	accountsMock := &MockAccount{}
+	accountsPlugin := &accounts.Plugin{
+		Profile: accountsMock,
+	}
+
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Heartbeat("/health/live"))
@@ -34,6 +40,7 @@ func (s *Server) Run(args []string) int {
 		w.Header().Set("Cache-Control", "public, max-age=7776000")
 		w.Write(s.EmbeddableResources.Logo)
 	})
+	r.Route("/account", accountsPlugin.Router())
 
 	server := &http.Server{Addr: ":3000", Handler: r}
 	notifyCtx, stop := signal.NotifyContext(context.Background(), syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
