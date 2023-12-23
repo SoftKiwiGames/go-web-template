@@ -18,3 +18,4 @@
 node_modules/
 *_templ.go
 /dist/
+/ui/style.css

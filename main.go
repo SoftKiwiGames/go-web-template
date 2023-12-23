@@ -10,6 +10,9 @@ import (
 var (
 	//go:embed assets/images/logo.svg
 	logo []byte
+
+	//go:embed ui/style.css
+	style []byte
 )
 
 func main() {
@@ -17,6 +20,7 @@ func main() {
 		EmbeddableResources: web.EmbeddableResources{
 			Favicon: logo,
 			Logo:    logo,
+			Style:   style,
 		},
 	}
 	srv.Run(os.Args)

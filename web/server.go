@@ -35,6 +35,11 @@ func (s *Server) Run(args []string) int {
 		w.Header().Set("Cache-Control", "public, max-age=7776000")
 		w.Write(s.EmbeddableResources.Favicon)
 	})
+	r.Get("/static/style.css", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/css")
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Write(s.EmbeddableResources.Style)
+	})
 	r.Get("/static/logo.svg", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "image/svg+xml")
 		w.Header().Set("Cache-Control", "public, max-age=7776000")
