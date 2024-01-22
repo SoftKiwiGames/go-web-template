@@ -2,6 +2,7 @@ package web
 
 import (
 	"SoftKiwiGames/go-web-template/accounts"
+	"SoftKiwiGames/go-web-template/ui"
 	"context"
 	"log"
 	"net/http"
@@ -44,6 +45,10 @@ func (s *Server) Run(args []string) int {
 		w.Header().Set("Content-Type", "image/svg+xml")
 		w.Header().Set("Cache-Control", "public, max-age=7776000")
 		w.Write(s.EmbeddableResources.Logo)
+	})
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		s.render.HTML(w, r, ui.Dashboard())
 	})
 	r.Route("/account", accountsPlugin.Router())
 
